@@ -39,7 +39,7 @@ const Checkout = () => {
                       <CommonButton link="/cart" label="Back to Cart" />
                     </div>
                     <div className="mt-2">
-                      <CommonButton link="/cart" label="Proceed to Payment" />
+                      <CommonButton link="/payment" label="Proceed to Payment" />
                     </div>
                   </div>
                 </div>

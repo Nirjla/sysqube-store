@@ -3,6 +3,7 @@ import Root from "../Root";
 import NotFoundPage from "../pages/NotFoundPage";
 import Home from "../pages/Home";
 import Checkout from "../pages/products/Checkout";
+import Payment from "../pages/products/Payment";
 
 export const publicRouter = createBrowserRouter([
   {
@@ -20,7 +21,11 @@ export const publicRouter = createBrowserRouter([
         element: <Checkout />,
         errorElement: <NotFoundPage />,
       },
+      {
+        path: "/payment",
+        element: <Payment />,
+        errorElement: <NotFoundPage />,
+      },
     ],
   },
-
 ]);
