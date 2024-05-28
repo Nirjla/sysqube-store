@@ -22,7 +22,7 @@ const ProductLists = () => {
                   <p className="mt-1 text-lg font-medium text-secondary ">
                     {product.price}
                   </p>
-                  <button className="text-primary">Add to Cart</button>
+                  <button className="text-primary text-sm">Add to Cart</button>
                 </div>
               </a>
             ))}

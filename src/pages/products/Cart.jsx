@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import {
   Dialog,
   DialogPanel,
@@ -9,6 +9,9 @@ import {
 import { XMarkIcon } from "@heroicons/react/24/outline";
 import { Link } from "react-router-dom";
 import CommonButton from "../../components/CommonButton";
+import CartInfo from "../../components/Cart/CartInfo";
+import CartWrapper from "../../components/Cart/CartWrapper";
+import CartImgBox from "../../components/Cart/CartImgBox";
 
 const products = [
   {
@@ -93,29 +96,8 @@ const Cart = () => {
                             className="-my-6 divide-y divide-gray-200"
                           >
                             {products.map((product) => (
-                              <li key={product.id} className="flex py-6">
-                                <div className="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
-                                  <img
-                                    src={product.imageSrc}
-                                    alt={product.imageAlt}
-                                    className="h-full w-full object-cover object-center"
-                                  />
-                                </div>
-
-                                <div className="ml-4 flex flex-1 flex-col">
-                                  <div>
-                                    <div className="flex justify-between text-base font-medium text-secondary">
-                                      <h3>
-                                        <a href={product.href}>
-                                          {product.name}
-                                        </a>
-                                      </h3>
-                                      <p className="ml-4">{product.price}</p>
-                                    </div>
-                                    <p className="mt-1 text-sm text-gray-500">
-                                      {product.color}
-                                    </p>
-                                  </div>
+                              <React.Fragment key={product.id}>
+                                <CartWrapper product={product}>
                                   <div className="flex flex-1 items-end justify-between text-sm">
                                     <div className="flex items-center">
                                       <div className="text-gray-600  pr-3">
@@ -144,8 +126,8 @@ const Cart = () => {
                                       </button>
                                     </div>
                                   </div>
-                                </div>
-                              </li>
+                                </CartWrapper>
+                              </React.Fragment>
                             ))}
                           </ul>
                         </div>
@@ -153,13 +135,18 @@ const Cart = () => {
                     </div>
 
                     <div className="border-t border-gray-200 px-4 py-6 sm:px-6">
-                      <div className="flex justify-between text-base font-medium text-primary">
+                      <div className="flex justify-between text-base font-medium text-secondary mb-2">
                         <p>Subtotal</p>
                         <p>$262.00</p>
                       </div>
-                      <p className="mt-0.5 text-sm text-gray-500">
-                        Shipping and taxes calculated at checkout.
-                      </p>
+                      <div className="flex justify-between text-base font-medium text-secondary mb-2">
+                        <p>VAT</p>
+                        <p>$20</p>
+                      </div>
+                      <div className="flex justify-between text-base font-medium text-primary">
+                        <p>Total</p>
+                        <p>$2620.00</p>
+                      </div>
                       <div className="mt-6">
                         <CommonButton label={"Checkout"} link={"/checkout"} />
                       </div>

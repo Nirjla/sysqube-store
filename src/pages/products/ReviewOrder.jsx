@@ -1,9 +1,19 @@
+import React, { useState } from "react";
 import BoxWrapper from "../../components/BoxWrapper";
 import Breadcrumb from "../../components/Breadcrumb";
 import Headline from "../../components/Headline";
 import InfoWrapper from "../../components/InfoWrapper";
+import SimpleButton from "../../components/SimpleButton";
+import CommonDialog from "../../components/CommonDialog";
+import CheckoutBox from "../../components/CheckoutBox";
+import PaymentBox from "../../components/PaymentBox";
+import CartWrapper from "../../components/Cart/CartWrapper";
+import CartBox from "../../components/Cart/CartBox";
+import CommonButton from "../../components/CommonButton";
 
 const ReviewOrder = () => {
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [editSection, setEditSection] = useState(null);
   const breadcrumbItems = [
     { label: "Checkout", link: "/checkout" },
     { label: "Payment Information", link: "/payment" },
@@ -25,6 +35,33 @@ const ReviewOrder = () => {
     cardNumber: "**** **** **** 1234", // Masked card number
     expirationDate: "12/23",
   };
+  const products = [
+    {
+      id: 1,
+      name: "Throwback Hip Bag",
+      href: "#",
+      color: "Salmon",
+      price: "$90.00",
+      quantity: 1,
+      imageSrc:
+        "https://tailwindui.com/img/ecommerce-images/shopping-cart-page-04-product-01.jpg",
+      imageAlt:
+        "Salmon orange fabric pouch with match zipper, gray zipper pull, and adjustable hip belt.",
+    },
+    {
+      id: 2,
+      name: "Medium Stuff Satchel",
+      href: "#",
+      color: "Blue",
+      price: "$32.00",
+      quantity: 1,
+      imageSrc:
+        "https://tailwindui.com/img/ecommerce-images/shopping-cart-page-04-product-02.jpg",
+      imageAlt:
+        "Front of satchel with blue canvas body, black straps and handle, drawstring top, and front zipper pouch.",
+    },
+    // More products...
+  ];
 
   return (
     <>
@@ -41,9 +78,13 @@ const ReviewOrder = () => {
                   <h3 className="text-lg font-semibold mb-4 text-secondary">
                     Shipping Information
                   </h3>
-                  <button className="font-semibold text-sm text-primary">
-                    Edit
-                  </button>
+                  <SimpleButton
+                    label={"Edit"}
+                    setIsDialogOpen={() => {
+                      setEditSection("shipping");
+                      setIsDialogOpen(true);
+                    }}
+                  />
                 </div>
                 <div className="grid grid-cols-2 gap-4 text-sm">
                   <InfoWrapper label="Name" input={shippingInfo.name} />
@@ -68,9 +109,13 @@ const ReviewOrder = () => {
                   <h3 className="text-lg font-semibold mb-4 text-secondary">
                     Payment Details
                   </h3>
-                  <button className="font-semibold text-sm text-primary">
-                    Edit
-                  </button>
+                  <SimpleButton
+                    label={"Edit"}
+                    setIsDialogOpen={() => {
+                      setEditSection("payment");
+                      setIsDialogOpen(true);
+                    }}
+                  />
                 </div>
                 <div className="grid grid-cols-2 gap-4 text-sm">
                   <InfoWrapper
@@ -89,7 +134,84 @@ const ReviewOrder = () => {
               </BoxWrapper>
             </div>
           </div>
+          <div className="lg:col-span-1 col-span-3 mt-6">
+            <div>
+              <BoxWrapper>
+                <h3 className="text-lg font-semibold mb-4 text-secondary">
+                  Order Summary
+                </h3>
+                <div className="text-sm">
+
+                <InfoWrapper label={"Sub-total"} input={"$80"} />
+                <InfoWrapper label={"Delivery Charges"} input={"$80"} />
+                <InfoWrapper label={"Total Payment"} input={"$160"} />
+                </div>
+
+                <hr className="my-3" />
+                <div className="flex justify-between items-center">
+                  <h3 className="text-lg font-semibold text-secondary">
+                    In Your Cart
+                  </h3>
+                  <SimpleButton
+                    label={"Edit"}
+                    setIsDialogOpen={() => {
+                      setEditSection("cart");
+                      setIsDialogOpen(true);
+                    }}
+                  />
+                </div>
+                {products.map((product) => (
+                  <React.Fragment key={product.id}>
+                    <CartWrapper product={product}>
+                      <div className="flex flex-1  justify-between text-sm">
+                        <div className="flex items-center">
+                          <div className="text-gray-600  pr-3">
+                            Qty: {product.quantity}
+                          </div>
+                        </div>
+                      </div>
+                    </CartWrapper>
+                  </React.Fragment>
+                ))}
+            <CommonButton link="#" label="Place Order" />
+              </BoxWrapper>
+            </div>
+          </div>
         </div>
+        <CommonDialog open={isDialogOpen} setOpen={setIsDialogOpen}>
+          {editSection === "shipping" && <CheckoutBox />}
+          {editSection === "payment" && <PaymentBox />}
+          {editSection === "cart" && (
+            <div className="w-full">
+              <h3 className="text-lg font-medium text-primary capitalize leading-7 pb-3">
+                Edit Your Cart
+              </h3>
+              {products.map((product) => (
+                <React.Fragment key={product.id}>
+                  <CartBox product={product} />
+                </React.Fragment>
+              ))}
+              <div className="border-t border-gray-200 px-4 py-6 sm:px-6">
+                <div className="flex justify-between text-base font-medium text-secondary mb-2">
+                  <p>Subtotal</p>
+                  <p>$262.00</p>
+                </div>
+                <div className="flex justify-between text-base font-medium text-secondary mb-2">
+                  <p>VAT</p>
+                  <p>$20</p>
+                </div>
+                <div className="flex justify-between text-base font-medium text-primary">
+                  <p>Total</p>
+                  <p>$2620.00</p>
+                </div>
+                <div className="mt-6">
+                  <CommonButton label={"Checkout"} link={"/checkout"} />
+                </div>
+                
+              </div>
+            </div>
+          )}
+        </CommonDialog>
       </div>
     </>
   );
