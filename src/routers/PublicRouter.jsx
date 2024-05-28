@@ -4,6 +4,7 @@ import NotFoundPage from "../pages/NotFoundPage";
 import Home from "../pages/Home";
 import Checkout from "../pages/products/Checkout";
 import Payment from "../pages/products/Payment";
+import ReviewOrder from "../pages/products/ReviewOrder";
 
 export const publicRouter = createBrowserRouter([
   {
@@ -24,6 +25,11 @@ export const publicRouter = createBrowserRouter([
       {
         path: "/payment",
         element: <Payment />,
+        errorElement: <NotFoundPage />,
+      },
+      {
+        path: "/review-order",
+        element: <ReviewOrder />,
         errorElement: <NotFoundPage />,
       },
     ],
