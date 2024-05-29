@@ -65,8 +65,8 @@ const ReviewOrder = () => {
 
   return (
     <>
-      <div className="container">
-        <div className="flex items-center justify-between pt-4 mt-3">
+      <div className="container px-4 sm:px-6 lg:px-8">
+        <div className="flex items-center justify-between flex-wrap pt-4 mt-3">
           <Headline title="Review" highlight={"Order"} />
           <Breadcrumb items={breadcrumbItems} />
         </div>

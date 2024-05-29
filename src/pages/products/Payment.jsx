@@ -10,8 +10,8 @@ const Payment = () => {
 
   return (
     <>
-      <div className="container">
-        <div className="pt-4 mt-3 flex justify-between">
+      <div className="container px-4 sm:px-6 lg:px-8">
+        <div className="pt-4 mt-3 flex flex-wrap justify-between">
           <Headline title={"Payment"} highlight={"Information"} />
           <Breadcrumb items={breadcrumbItems} />
         </div>

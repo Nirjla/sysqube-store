@@ -1,11 +1,11 @@
 import Headline from "../../components/Headline";
-import products from "../../db/data";
+import { products } from "../../db/data";
 
 const ProductLists = () => {
   return (
     <>
-      <div className="bg-white">
-        <div className="mx-auto  py-16  sm:py-24  ">
+      <div className="bg-white ">
+        <div className="mx-auto  py-10  sm:py-18  ">
           <Headline title="New" highlight={"Arrivals"} />
           <div className="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 xl:gap-x-8">
             {products.map((product) => (
@@ -22,7 +22,7 @@ const ProductLists = () => {
                   <p className="mt-1 text-lg font-medium text-secondary ">
                     {product.price}
                   </p>
-                  <button className="text-primary text-sm">Add to Cart</button>
+                  <button className="text-primary text-sm font-semibold">Add to Cart</button>
                 </div>
               </a>
             ))}
