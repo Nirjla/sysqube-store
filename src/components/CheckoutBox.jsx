@@ -1,11 +1,11 @@
 import { Form, Formik, useFormikContext } from "formik";
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { provinces } from "../db/data";
 import CommonButton from "./CommonButton";
 import InputWrapper from "./InputWrapper";
 import SelectWrapper from "./SelectWrapper";
 import { shippingValidationSchema } from "../schemas/validationSchema";
-import CommonProgressBar from "./CommonProgressBar";
+import { useProgress } from "../constants";
 
 const CheckoutBox = () => {
   const initialValues = {
@@ -19,28 +19,21 @@ const CheckoutBox = () => {
     phone: "",
   };
 
-  const [progress, setProgress] = useState(0);
-
-  const calculateProgress = (values) => {
-    const fields = Object.values(values);
-    const completedFields = fields.filter((field) => field !== "");
-    const progressPercentage = (completedFields.length / fields.length) * 45;
-    setProgress(progressPercentage);
-  };
-
   const FormObserver = () => {
     const { values } = useFormikContext();
-
+    const { setProgress } = useProgress();
+  
     useEffect(() => {
-      calculateProgress(values);
-    }, [values]);
-
+      const filledFields = Object.values(values).filter((value) => !!value);
+      const progress = (filledFields.length / Object.keys(values).length) * 50; // Assuming 25% progress for shipping details completion
+      setProgress(progress);
+    }, [values, setProgress]);
+  
     return null;
   };
-
+  
   return (
     <div className="checkout w-full">
-      <CommonProgressBar progress={progress} />
       <Formik
         initialValues={initialValues}
         validationSchema={shippingValidationSchema}

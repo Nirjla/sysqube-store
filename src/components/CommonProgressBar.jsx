@@ -1,8 +1,12 @@
-import React from "react";
+import React, { useContext } from "react";
+import { ProgressContext } from "../context/ProgressContext";
 
-const CommonProgressBar = ({ progress }) => {
+const CommonProgressBar = () => {
+  const { progress } = useContext(ProgressContext);
+
   return (
-    <div className="w-full bg-gray-200 rounded-full h-2.5 mb-4">
+    
+    <div className="w-full bg-gray-200 rounded-full h-2.5">
       <div
         className="bg-primary h-2.5 rounded-full"
         style={{ width: `${progress}%` }}
