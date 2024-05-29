@@ -1,9 +1,11 @@
-import { Form, Formik } from "formik";
+import { Form, Formik, useFormikContext } from "formik";
+import { useState, useEffect } from "react";
 import { provinces } from "../db/data";
 import CommonButton from "./CommonButton";
 import InputWrapper from "./InputWrapper";
 import SelectWrapper from "./SelectWrapper";
 import { shippingValidationSchema } from "../schemas/validationSchema";
+import CommonProgressBar from "./CommonProgressBar";
 
 const CheckoutBox = () => {
   const initialValues = {
@@ -11,13 +13,34 @@ const CheckoutBox = () => {
     lastName: "",
     address: "",
     city: "",
-    state: "",
+    state: provinces[0].id,
     zipCode: "",
     country: "",
     phone: "",
   };
+
+  const [progress, setProgress] = useState(0);
+
+  const calculateProgress = (values) => {
+    const fields = Object.values(values);
+    const completedFields = fields.filter((field) => field !== "");
+    const progressPercentage = (completedFields.length / fields.length) * 45;
+    setProgress(progressPercentage);
+  };
+
+  const FormObserver = () => {
+    const { values } = useFormikContext();
+
+    useEffect(() => {
+      calculateProgress(values);
+    }, [values]);
+
+    return null;
+  };
+
   return (
     <div className="checkout w-full">
+      <CommonProgressBar progress={progress} />
       <Formik
         initialValues={initialValues}
         validationSchema={shippingValidationSchema}
@@ -27,7 +50,8 @@ const CheckoutBox = () => {
       >
         {({ errors, touched }) => (
           <Form>
-            <div className="grid grid-cols-3 gap-[30px]  mb-[30px] lg:mb-[90px]">
+            <FormObserver />
+            <div className="grid grid-cols-3 gap-[30px] mb-[30px] lg:mb-[90px]">
               <div className="lg:col-span-3 col-span-3">
                 <div className="customer-details">
                   <div>

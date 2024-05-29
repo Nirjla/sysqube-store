@@ -1,9 +1,8 @@
 import { Link } from "react-router-dom";
 import { CiShoppingCart } from "react-icons/ci";
-import React, { useState } from "react";
+import { useState } from "react";
 import Cart from "./products/Cart";
 import { RxHamburgerMenu } from "react-icons/rx";
-import { XMarkIcon } from "@heroicons/react/24/outline";
 import MobileNavSlideover from "../components/MobileNavSlideover";
 
 const Navbar = () => {
@@ -25,11 +24,11 @@ const Navbar = () => {
           <div className="flex justify-between items-center py-4">
             <div className="header-logo">
               <Link to="/">
-                <img
-                  src="./assets/sysqube-store.png"
-                  alt=""
-                  className="sm:max-w-[116px] md:max-w-[144px]"
-                />
+                <h1 className="font-semibold text-lg text-nowrap space-x-2 text-secondary ">
+                  Sys
+                  <span className="text-primary">Qube</span>
+                  <span>Store</span>
+                </h1>
               </Link>
             </div>
             <div className="hidden md:flex md:items-center md:space-x-6">
@@ -68,7 +67,6 @@ const Navbar = () => {
                 />
               </button>
               <button className="md:hidden" onClick={toggleMenu}>
-                {/* // <XMarkIcon className="h-6 w-6 text-secondary" /> */}
                 <RxHamburgerMenu className="h-6 w-6 text-secondary" />
               </button>
             </div>

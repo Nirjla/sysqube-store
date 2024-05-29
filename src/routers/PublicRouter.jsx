@@ -16,6 +16,7 @@ export const publicRouter = createBrowserRouter([
         path: "/",
         element: <Home />,
         errorElement: <NotFoundPage />,
+        index: true,
       },
       {
         path: "/checkout",

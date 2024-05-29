@@ -10,6 +10,7 @@ import PaymentBox from "../../components/PaymentBox";
 import CartWrapper from "../../components/Cart/CartWrapper";
 import CartBox from "../../components/Cart/CartBox";
 import CommonButton from "../../components/CommonButton";
+import { products } from "../../db/data";
 
 const ReviewOrder = () => {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
@@ -35,33 +36,7 @@ const ReviewOrder = () => {
     cardNumber: "**** **** **** 1234", // Masked card number
     expirationDate: "12/23",
   };
-  const products = [
-    {
-      id: 1,
-      name: "Throwback Hip Bag",
-      href: "#",
-      color: "Salmon",
-      price: "$90.00",
-      quantity: 1,
-      imageSrc:
-        "https://tailwindui.com/img/ecommerce-images/shopping-cart-page-04-product-01.jpg",
-      imageAlt:
-        "Salmon orange fabric pouch with match zipper, gray zipper pull, and adjustable hip belt.",
-    },
-    {
-      id: 2,
-      name: "Medium Stuff Satchel",
-      href: "#",
-      color: "Blue",
-      price: "$32.00",
-      quantity: 1,
-      imageSrc:
-        "https://tailwindui.com/img/ecommerce-images/shopping-cart-page-04-product-02.jpg",
-      imageAlt:
-        "Front of satchel with blue canvas body, black straps and handle, drawstring top, and front zipper pouch.",
-    },
-    // More products...
-  ];
+ 
 
   return (
     <>
@@ -134,7 +109,7 @@ const ReviewOrder = () => {
               </BoxWrapper>
             </div>
           </div>
-          <div className="lg:col-span-1 col-span-3 mt-6">
+          <div className="lg:col-span-1 col-span-3 md:mt-6">
             <div>
               <BoxWrapper>
                 <h3 className="text-lg font-semibold mb-4 text-secondary">

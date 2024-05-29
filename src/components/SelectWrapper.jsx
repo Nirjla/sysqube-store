@@ -1,5 +1,5 @@
-import { useField } from "formik";
-import { useState } from "react";
+import { useField, useFormikContext } from "formik";
+import { useState, useEffect } from "react";
 import {
   Listbox,
   ListboxButton,
@@ -14,8 +14,13 @@ function classNames(...classes) {
 }
 
 const SelectWrapper = ({ label, name, data }) => {
-  const [meta] = useField(name);
-  const [selected, setSelected] = useState(data[0]);
+  const { setFieldValue } = useFormikContext();
+  const [field, meta] = useField(name);
+  const [selected, setSelected] = useState(data.find(item => item.id === field.value) || data[0]);
+
+  useEffect(() => {
+    setFieldValue(name, selected.id);
+  }, [selected, setFieldValue, name]);
 
   const handleChange = (value) => {
     setSelected(value);
@@ -32,7 +37,7 @@ const SelectWrapper = ({ label, name, data }) => {
             >
               {label}
             </label>
-            <div className="relative ">
+            <div className="relative">
               <ListboxButton className="relative cursor-default mt-2 block w-full rounded-md border-0 py-1.5 pl-4 pr-20 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
                 <span className="flex items-center">
                   <span className="ml-3 block truncate">{selected.name}</span>
@@ -52,19 +57,18 @@ const SelectWrapper = ({ label, name, data }) => {
                 leaveTo="opacity-0"
               >
                 <ListboxOptions className="absolute z-10 mt-1 max-h-56 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm">
-                  {data.map((data) => (
+                  {data.map((item) => (
                     <ListboxOption
-                      key={data.id}
-                      className={({ focus }) =>
+                      key={item.id}
+                      className={({ active }) =>
                         classNames(
-                          focus ? "bg-primary text-white" : "",
-                          !focus ? "text-gray-900" : "",
+                          active ? "bg-primary text-white" : "text-gray-900",
                           "relative cursor-default select-none py-2 pl-3 pr-9"
                         )
                       }
-                      value={data}
+                      value={item}
                     >
-                      {({ selected, focus }) => (
+                      {({ selected, active }) => (
                         <>
                           <div className="flex items-center">
                             <span
@@ -73,14 +77,14 @@ const SelectWrapper = ({ label, name, data }) => {
                                 "ml-3 block truncate"
                               )}
                             >
-                              {data.name}
+                              {item.name}
                             </span>
                           </div>
 
                           {selected ? (
                             <span
                               className={classNames(
-                                focus ? "text-white" : "text-indigo-600",
+                                active ? "text-white" : "text-indigo-600",
                                 "absolute inset-y-0 right-0 flex items-center pr-4"
                               )}
                             >
@@ -108,4 +112,3 @@ const SelectWrapper = ({ label, name, data }) => {
 };
 
 export default SelectWrapper;
- 
