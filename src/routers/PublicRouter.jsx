@@ -24,12 +24,12 @@ export const publicRouter = createBrowserRouter([
         errorElement: <NotFoundPage />,
       },
       {
-        path: "/payment",
+        path: "/checkout/payment",
         element: <Payment />,
         errorElement: <NotFoundPage />,
       },
       {
-        path: "/review-order",
+        path: "/checkout/payment/review-order",
         element: <ReviewOrder />,
         errorElement: <NotFoundPage />,
       },

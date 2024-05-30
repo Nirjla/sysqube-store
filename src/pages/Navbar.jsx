@@ -24,7 +24,7 @@ const Navbar = () => {
           <div className="flex justify-between items-center py-4">
             <div className="header-logo">
               <Link to="/">
-                <h1 className="font-semibold text-lg text-nowrap space-x-2 text-secondary ">
+                <h1 className="font-semibold text-lg md:text-xl  lg:text-2xl text-nowrap space-x-2 text-secondary ">
                   Sys
                   <span className="text-primary">Qube</span>
                   <span>Store</span>

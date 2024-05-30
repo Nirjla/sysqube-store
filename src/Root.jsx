@@ -4,7 +4,7 @@ import CommonProgressBar from "./components/CommonProgressBar";
 
 const Root = () => {
   const location = useLocation();
-  const showProgressBar = ["/checkout", "/payment", "/review-order"].includes(location.pathname);
+  const showProgressBar = ["/checkout", "/checkout/payment", "/checkout/payment/review-order"].includes(location.pathname);
   return (
     <div className="">
       <Navbar/>

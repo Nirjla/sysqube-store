@@ -19,17 +19,23 @@ const PaymentBox = () => {
   };
   const FormObserver = () => {
     const { values } = useFormikContext();
-    const { setProgress } = useProgress();
+    const { progress: shippingProgress, setProgress } = useProgress();
+    console.log(shippingProgress);
+    if (shippingProgress === 50) {
+      var startFrom = 50;
+    } else {
+      startFrom = shippingProgress;
+    }
     useEffect(() => {
       const filledFields = Object.values(values).filter((value) => !!value);
-      const paymentProgress = (filledFields.length / Object.keys(values).length) * 50;
-      const progress = 50 + paymentProgress;
+      const paymentProgress =
+        (filledFields.length / Object.keys(values).length) * (100 - startFrom);
+      const progress = startFrom + paymentProgress;
       setProgress(progress);
     }, [values, setProgress]);
-  
+
     return null;
   };
-  
 
   return (
     <div className="payment">
@@ -117,10 +123,13 @@ const PaymentBox = () => {
                     />
                     <InputWrapper label="CVV" name="cvv" />
                     <div className="mt-2">
-                      <CommonButton link="/cart" label="Back to Shipping" />
+                      <CommonButton link="/checkout" label="Back to Shipping" />
                     </div>
                     <div className="mt-2">
-                      <CommonButton link="/review-order" label="Review Order" />
+                      <CommonButton
+                        link="/checkout/payment/review-order"
+                        label="Review Order"
+                      />
                     </div>
                   </div>
                 </div>

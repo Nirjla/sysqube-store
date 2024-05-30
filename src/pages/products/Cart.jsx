@@ -89,7 +89,7 @@ const Cart = ({ isCartOpen, toggleCart }) => {
             </Link>
           </div>
         </div>
-        <div className="mt-6 flex justify-center text-center text-sm text-gray-500">
+        <div className="mt-6 flex justify-center text-center text-sm text-gray-500 ">
           <p>
             or{" "}
             <button
