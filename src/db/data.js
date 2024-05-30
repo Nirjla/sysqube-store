@@ -47,6 +47,7 @@ export const products = [
     imageAlt:
       "Hand holding black machined steel mechanical pencil with brass tip and top.",
   },
+  
   // More products...
 ];
 export const provinces = [

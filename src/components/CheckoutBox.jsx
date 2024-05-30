@@ -76,10 +76,10 @@ const CheckoutBox = () => {
                         name="phone"
                         type="tel"
                       />
-                      <div className="sm:mt-2 md:mt-2">
+                      <div className="order-2 sm:order-1 md:mt-2 md:order-1 lg:order-1 ">
                         <CommonButton  label="Back to Cart" toggle={toggleCart}/>
                       </div>
-                      <div className="md:mt-2">
+                      <div className="order-1 sm:order-2 md:order-2 lg:order-2 sm:mt-2 md:mt-2 mt-2 ">
                         <CommonButton
                           link="/checkout/payment"
                           label="Proceed to Payment"

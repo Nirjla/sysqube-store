@@ -111,7 +111,7 @@ const PaymentBox = () => {
               </div>
               <div className="lg:col-span-2 col-span-3 lg:mt-3">
                 <div className="payment-details">
-                  <div className="grid grid-cols-2 gap-4 mt-4">
+                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 mt-4">
                     <InputWrapper
                       label="Cardholder Name"
                       name="cardholderName"
@@ -122,10 +122,10 @@ const PaymentBox = () => {
                       name="expirationDate"
                     />
                     <InputWrapper label="CVV" name="cvv" />
-                    <div className="mt-2">
+                    <div className="order-2 md:mt-2 sm:order-1 md:order-1 lg:order-1 ">
                       <CommonButton link="/checkout" label="Back to Shipping" />
                     </div>
-                    <div className="mt-2">
+                    <div className="order-1 sm:order-2 md:order-2 lg:order-2 sm:mt-2 md:mt-2 mt-2">
                       <CommonButton
                         link="/checkout/payment/review-order"
                         label="Review Order"

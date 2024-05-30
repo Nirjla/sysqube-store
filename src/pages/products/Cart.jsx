@@ -63,8 +63,7 @@ const Cart = ({ isCartOpen, toggleCart }) => {
           </div>
         </div>
       </div>
-
-      <div className="border-t border-gray-200 px-4 py-6 sm:px-6">
+      <div className="border-t border-gray-200 px-4 py-6 sm:px-6 ">
         <div className="flex justify-between text-base font-medium text-secondary mb-2">
           <p>Subtotal</p>
           <p>$262.00</p>
