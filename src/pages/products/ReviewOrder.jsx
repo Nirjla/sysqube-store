@@ -10,11 +10,14 @@ import PaymentBox from "../../components/PaymentBox";
 import CartWrapper from "../../components/Cart/CartWrapper";
 import CartBox from "../../components/Cart/CartBox";
 import CommonButton from "../../components/CommonButton";
-import { products } from "../../db/data";
+import { useGetProductsQuery } from "../../api/api";
+import { useSelector } from "react-redux";
 
 const ReviewOrder = () => {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [editSection, setEditSection] = useState(null);
+  const cart = useSelector((state) => state.cart);
+
   const breadcrumbItems = [
     { label: "Checkout", link: "/checkout" },
     { label: "Payment Information", link: "/payment" },
@@ -36,8 +39,13 @@ const ReviewOrder = () => {
     cardNumber: "**** **** **** 1234", // Masked card number
     expirationDate: "12/23",
   };
- 
-
+  const { data: products, isLoading, isError, error } = useGetProductsQuery();
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+  if (isError) {
+    return <div>Error:{error.message}</div>;
+  }
   return (
     <>
       <div className="container px-4 sm:px-6 lg:px-8">
@@ -116,10 +124,9 @@ const ReviewOrder = () => {
                   Order Summary
                 </h3>
                 <div className="text-sm">
-
-                <InfoWrapper label={"Sub-total"} input={"$80"} />
-                <InfoWrapper label={"Delivery Charges"} input={"$80"} />
-                <InfoWrapper label={"Total Payment"} input={"$160"} />
+                  <InfoWrapper label={"Sub-total"} input={"$80"} />
+                  <InfoWrapper label={"Delivery Charges"} input={"$80"} />
+                  <InfoWrapper label={"Total Payment"} input={"$160"} />
                 </div>
 
                 <hr className="my-3" />
@@ -135,20 +142,27 @@ const ReviewOrder = () => {
                     }}
                   />
                 </div>
-                {products.map((product) => (
-                  <React.Fragment key={product.id}>
-                    <CartWrapper product={product}>
-                      <div className="flex flex-1  justify-between text-sm">
-                        <div className="flex items-center">
-                          <div className="text-gray-600  pr-3">
-                            Qty: {product.quantity}
+                {cart.cartItems.length === 0 ? (
+                  <p className="text-sm text-secondary py-3">
+                    Your cart is currently empty
+                  </p>
+                ) : (
+                  cart.cartItems.map((product) => (
+                    <React.Fragment key={product.id}>
+                      <CartWrapper product={product}>
+                        <div className="flex flex-1 justify-between text-sm">
+                          <div className="flex items-center">
+                            <div className="text-gray-600 pr-3">
+                              Qty: {product.cartQuantity}
+                            </div>
                           </div>
                         </div>
-                      </div>
-                    </CartWrapper>
-                  </React.Fragment>
-                ))}
-            <CommonButton link="#" label="Place Order" />
+                      </CartWrapper>
+                    </React.Fragment>
+                  ))
+                )}
+
+                <CommonButton link="#" label="Place Order" />
               </BoxWrapper>
             </div>
           </div>
@@ -182,7 +196,6 @@ const ReviewOrder = () => {
                 <div className="mt-6">
                   <CommonButton label={"Checkout"} link={"/checkout"} />
                 </div>
-                
               </div>
             </div>
           )}

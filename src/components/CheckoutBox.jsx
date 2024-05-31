@@ -1,14 +1,16 @@
 import { Form, Formik, useFormikContext } from "formik";
 import { useEffect, useState } from "react";
-import { provinces } from "../db/data";
+// import { provinces } from "../db/data";
 import CommonButton from "./CommonButton";
 import InputWrapper from "./InputWrapper";
 import SelectWrapper from "./SelectWrapper";
 import { shippingValidationSchema } from "../schemas/validationSchema";
 import { useProgress } from "../constants";
 import Cart from "../pages/products/Cart";
+import { provinces } from "../db/data";
 
 const CheckoutBox = () => {
+ 
   const [isCartOpen, setIsCartOpen] = useState(false);
 
   const toggleCart = () => {
