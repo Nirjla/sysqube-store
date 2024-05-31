@@ -1,7 +1,21 @@
+import { useDispatch } from "react-redux";
 import Headline from "../../components/Headline";
-import { products } from "../../db/data";
+import { useGetProductsQuery } from "../../api/api";
+import { addToCart } from "../../slices/cartSlice";
 
 const ProductLists = () => {
+  const dispatch = useDispatch();
+  const { data: products, isLoading, isError, error } = useGetProductsQuery();
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+  if (isError) {
+    return <div>Error:{error.message}</div>;
+  }
+  const handleAddToCart = (product) => {
+    dispatch(addToCart(product));
+    // navigate('/cart');
+  };
   return (
     <>
       <div className="bg-white ">
@@ -22,7 +36,12 @@ const ProductLists = () => {
                   <p className="mt-1 text-lg font-medium text-secondary ">
                     {product.price}
                   </p>
-                  <button className="text-primary text-sm font-semibold">Add to Cart</button>
+                  <button
+                    className="text-primary text-sm font-semibold"
+                    onClick={() => handleAddToCart(product)}
+                  >
+                    Add to Cart
+                  </button>
                 </div>
               </a>
             ))}

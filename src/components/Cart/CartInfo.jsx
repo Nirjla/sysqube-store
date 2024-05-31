@@ -6,7 +6,7 @@ const CartInfo = ({ product }) => {
           <h3>
             <a href={product.href}>{product.name}</a>
           </h3>
-          <p className="ml-4">{product.price}</p>
+          <p className="ml-4">  ${(product.price * product.cartQuantity).toFixed(2)}</p>
         </div>
         <p className="mt-1 text-sm text-gray-500">{product.color}</p>
       </div>

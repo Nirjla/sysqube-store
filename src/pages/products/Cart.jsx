@@ -1,11 +1,24 @@
 import { XMarkIcon } from "@heroicons/react/24/outline";
 import { Link } from "react-router-dom";
 import CartWrapper from "../../components/Cart/CartWrapper";
-import { products } from "../../db/data";
-import React from "react";
+import React, { useEffect } from "react";
 import CommonSlideover from "../../components/CommonSlideover";
+import {
+  clearCart,
+  decreaseQuantity,
+  getTotal,
+  increaseQuantity,
+  removeFromCart,
+} from "../../slices/cartSlice";
+import { useDispatch, useSelector } from "react-redux";
 
 const Cart = ({ isCartOpen, toggleCart }) => {
+  const dispatch = useDispatch();
+  const cart = useSelector((state) => state.cart);
+  useEffect(() => {
+    dispatch(getTotal());
+  }, [cart, dispatch]);
+
   return (
     <CommonSlideover isOpen={isCartOpen} toggleOpen={toggleCart}>
       <div className="flex-1 overflow-y-auto px-4 py-6 sm:px-6">
@@ -26,68 +39,83 @@ const Cart = ({ isCartOpen, toggleCart }) => {
 
         <div className="mt-8">
           <div className="flow-root">
-            <ul role="list" className="-my-6 divide-y divide-gray-200">
-              {products.map((product) => (
-                <React.Fragment key={product.id}>
-                  <CartWrapper product={product}>
-                    <div className="flex flex-1 items-end justify-between text-sm">
-                      <div className="flex items-center">
-                        <div className="text-gray-600  pr-3">Qty</div>
-                        <div className="flex justify-between items-center gap-3">
-                          <button className="bg-gray-200 p-2 rounded-md border border-transparent text-gray-600 ">
-                            +
-                          </button>
-                          <div className="text-gray-600 text-sm ">
-                            {product.quantity}
-                          </div>
+            {cart.cartItems.length === 0 ? (
+              <p  className="text-sm text-secondary">Your cart is currently empty</p>
+            ) : (
+              <ul role="list" className="-my-6 divide-y divide-gray-200">
+                {cart.cartItems.map((product) => (
+                  <React.Fragment key={product.id}>
+                    <CartWrapper product={product}>
+                      <div className="flex flex-1 items-end justify-between text-sm">
+                        <div className="flex items-center">
+                          <div className="text-gray-600  pr-3">Qty</div>
+                          <div className="flex justify-between items-center gap-3">
+                            <button
+                              className="bg-gray-200 p-2 rounded-md border border-transparent text-gray-600 "
+                              onClick={() =>
+                                dispatch(increaseQuantity(product))
+                              }
+                            >
+                              +
+                            </button>
+                            <div className="text-gray-600 text-sm ">
+                              {product.cartQuantity}
+                            </div>
 
-                          <button className="bg-gray-200 p-2 rounded-md border border-transparent text-gray-600 ">
-                            -
+                            <button
+                              className="bg-gray-200 p-2 rounded-md border border-transparent text-gray-600 "
+                              onClick={() =>
+                                dispatch(decreaseQuantity(product))
+                              }
+                            >
+                              -
+                            </button>
+                          </div>
+                        </div>
+
+                        <div className="flex">
+                          <button
+                            type="button"
+                            className="font-medium text-primary hover:text-accent"
+                            onClick={() => dispatch(removeFromCart(product))}
+                          >
+                            Remove
                           </button>
                         </div>
                       </div>
-
-                      <div className="flex">
-                        <button
-                          type="button"
-                          className="font-medium text-primary hover:text-accent"
-                        >
-                          Remove
-                        </button>
-                      </div>
-                    </div>
-                  </CartWrapper>
-                </React.Fragment>
-              ))}
-            </ul>
+                    </CartWrapper>
+                  </React.Fragment>
+                ))}
+              </ul>
+            )}
           </div>
         </div>
       </div>
       <div className="border-t border-gray-200 px-4 py-6 sm:px-6 ">
         <div className="flex justify-between text-base font-medium text-secondary mb-2">
           <p>Subtotal</p>
-          <p>$262.00</p>
+          <p className="">${cart.cartTotalAmount}</p>
         </div>
-        <div className="flex justify-between text-base font-medium text-secondary mb-2">
-          <p>VAT</p>
-          <p>$262.00</p>
-        </div>
-        <div className="flex justify-between text-base font-medium text-primary">
-          <p>Total</p>
-          <p>$262.00</p>
-        </div>
-        <div className="mt-6">
-          <div>
-            <Link
-              // role="button"
-              to="/checkout"
-              className="flex items-center justify-center rounded-md border border-transparent bg-primary  px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-accent"
-              onClick={toggleCart}
+        {cart.cartItems.length > 0 && (
+          <div className="mt-6 space-y-3">
+            <button
+              className="w-full flex items-center justify-center rounded-md border border-transparent bg-primary  px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-accent"
+              onClick={() => dispatch(clearCart())}
             >
-              Checkout
-            </Link>
+              Clear Cart
+            </button>
+            <div>
+              <Link
+                // role="button"
+                to="/checkout"
+                className="flex items-center justify-center rounded-md border border-transparent bg-primary  px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-accent"
+                onClick={toggleCart}
+              >
+                Checkout
+              </Link>
+            </div>
           </div>
-        </div>
+        )}
         <div className="mt-6 flex justify-center text-center text-sm text-gray-500 ">
           <p>
             or{" "}

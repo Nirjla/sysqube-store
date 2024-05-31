@@ -4,10 +4,12 @@ import { useState } from "react";
 import Cart from "./products/Cart";
 import { RxHamburgerMenu } from "react-icons/rx";
 import MobileNavSlideover from "../components/MobileNavSlideover";
+import { useSelector } from "react-redux";
 
 const Navbar = () => {
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const { cartTotalQuantity } = useSelector((state) => state.cart);
 
   const toggleCart = () => {
     setIsCartOpen(!isCartOpen);
@@ -60,12 +62,15 @@ const Navbar = () => {
               </ul>
             </div>
             <div className="flex items-center space-x-4">
-              <button onClick={toggleCart}>
-                <CiShoppingCart
-                  size={30}
-                  className="font-extrabold text-secondary"
-                />
-              </button>
+              <div>
+                <button onClick={toggleCart}>
+                  <CiShoppingCart
+                    size={30}
+                    className="font-extrabold text-secondary"
+                  />
+                </button>
+                  <span className="text-sm text-secondary">{cartTotalQuantity}</span>
+              </div>
               <button className="md:hidden" onClick={toggleMenu}>
                 <RxHamburgerMenu className="h-6 w-6 text-secondary" />
               </button>
