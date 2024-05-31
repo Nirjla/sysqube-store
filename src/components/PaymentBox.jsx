@@ -21,13 +21,9 @@ const PaymentBox = () => {
     const { values } = useFormikContext();
     const { progress: shippingProgress, setProgress } = useProgress();
     console.log(shippingProgress);
-    if (shippingProgress === 50) {
-      var startFrom = 50;
-    } else {
-      startFrom = shippingProgress;
-    }
     useEffect(() => {
       const filledFields = Object.values(values).filter((value) => !!value);
+      const startFrom = shippingProgress === 50 ? 50 : shippingProgress;
       const paymentProgress =
         (filledFields.length / Object.keys(values).length) * (100 - startFrom);
       const progress = startFrom + paymentProgress;
@@ -46,7 +42,7 @@ const PaymentBox = () => {
           console.log(values);
         }}
       >
-        {({ errors, touched }) => (
+        {({ errors, touched, isValid, dirty }) => (
           <Form>
             <FormObserver />
             <div className="grid grid-cols-3 gap-[30px] mb-[30px] lg:mb-[90px]">
@@ -123,12 +119,14 @@ const PaymentBox = () => {
                     />
                     <InputWrapper label="CVV" name="cvv" />
                     <div className="order-2 md:mt-2 sm:order-1 md:order-1 lg:order-1 ">
-                      <CommonButton link="/checkout" label="Back to Shipping" />
+                      <CommonButton link="/checkout" label="Back to Shipping" isBackButton={true} />
                     </div>
                     <div className="order-1 sm:order-2 md:order-2 lg:order-2 sm:mt-2 md:mt-2 mt-2">
                       <CommonButton
                         link="/checkout/payment/review-order"
                         label="Review Order"
+                        isValid={isValid}
+                        dirty={dirty}
                       />
                     </div>
                   </div>
