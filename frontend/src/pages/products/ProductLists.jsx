@@ -34,7 +34,7 @@ const ProductLists = () => {
                 <h3 className="mt-4 text-sm text-secondary">{product.name}</h3>
                 <div className="flex justify-between items-center">
                   <p className="mt-1 text-lg font-medium text-secondary ">
-                    {product.price}
+                    ${product.price}
                   </p>
                   <button
                     className="text-primary text-sm font-semibold"
