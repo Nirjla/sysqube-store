@@ -1,8 +1,17 @@
-# React + Vite
+# Sysqube Store
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This is a React application for the Sysqube Store, utilizing Redux Toolkit Query for state management and a Node.js-based JSON Server for mock API data.(for this I have created separeted directory for this
+https://github.com/Nirjla/sysqube-api)
 
-Currently, two official plugins are available:
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+1. **Clone the repository:**
+
+   git clone https://github.com/Nirjla/sysqube-store.git
+   cd sysqube-store
+   git checkout development
+
+2. **Install the dependencies:**
+   npm install
+
+3. **Start the React Application:**
+npm run dev
