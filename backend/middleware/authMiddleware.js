@@ -1,6 +1,6 @@
 const jwt = require("jsonwebtoken")
 
-const { jwt, JWT } = require("../constants")
+const {  JWT } = require("../constants")
 
 module.exports = async (req, res, next) => {
       try {
@@ -13,8 +13,9 @@ module.exports = async (req, res, next) => {
             }
             const payload = jwt.verify(jwtToken, JWT.JWT_SECRET)
             req.user = payload.user
+            console.log(req.user)
       } catch (err) {
-            return res.status(403).josn({
+            return res.status(403).json({
                   success: false,
                   message: "Not Authorized"
             })
