@@ -37,19 +37,34 @@ exports.addToCart = async (req, res) => {
     }
 };
 
-exports.deleteFromCart = async (req, res) => {
+exports.getCartItems = async (req, res) => {
     try {
         const userId = req.user.id;
+        const cart = await Cart.findOne({ user: userId }).populate('items.item')
+        if (!cart) {
+            return res.status(404).json({ message: 'Cart not found for this user' });
+        }
+
+        res.json(cart);
+    } catch (error) {
+        console.error('Error fetching cart:', error);
+        res.status(500).json({ message: 'Internal server error' });
+    }
+}
+
+
+exports.deleteFromCart = async (req, res) => {
+    try {
+        console.log("hello")
+        console.log(req.params)
+        const userId = req.user.id;
         const { itemId } = req.params
-        const cart = await Cart.findOneAndUpdate({
-            user: userId
-        }, {
-            $pull: {
-                items: { item: itemId }
-            }
-        }, {
-            new: true
-        })
+        console.log(req.params)
+        const cart = await Cart.findOneAndUpdate(
+            { user: userId },
+            { $pull: { items: { item: itemId } } },
+            { new: true }
+        );
         if (!cart) {
             return res.status(404).json({ message: 'Cart not found for this user' })
         }
@@ -59,3 +74,4 @@ exports.deleteFromCart = async (req, res) => {
         res.status(500).json({ message: 'Internal Server Error' })
     }
 }
+
