@@ -75,3 +75,29 @@ exports.deleteFromCart = async (req, res) => {
     }
 }
 
+exports.updateQuantity = async (req, res) => {
+    try {
+        const userId = req.user.id
+        console.log(userId)
+        const { itemId } = req.params
+        console.log(itemId)
+        const { quantity } = req.body
+        const cart = await Cart.findOne({ user: userId })
+        console.log(cart)
+        if (!cart) {
+            return res.status(404).json({ message: 'Cart not found for this user' })
+        }
+        const existingCartItem = cart.items.find(item => item.item.toString() === itemId)
+        if (!existingCartItem) {
+            return res.status(404).json({
+                message: 'Item not foound in the cart'
+            })
+        }
+        existingCartItem.quantity = quantity
+        const updatedCart = await cart.save()
+        res.json(updatedCart)
+    } catch (err) {
+        console.error('Error updating quantity:', err)
+        res.status(500).json({ message: 'Internal serrver error' })
+    }
+}
